@@ -8,14 +8,7 @@ const Cards = () => {
         <h4>Showing 8 of 8 Products</h4>
       </div>
       <div className="cards-layout">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <Card title={"make lemonade"} price={"29.99"} />
       </div>
     </div>
   );

@@ -86,7 +86,6 @@ const Nav = () => {
             <li>
               <A href="/about">About</A>
             </li>
-            <li>Contact</li>
           </ul>
         </div>
       </div>

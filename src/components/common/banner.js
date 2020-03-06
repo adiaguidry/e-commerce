@@ -1,4 +1,5 @@
 import React from "react";
+import { A } from "hookrouter";
 
 const Banner = () => {
   return (
@@ -12,7 +13,9 @@ const Banner = () => {
         </div>
         <div>
           <h2>SALE We've got you covered!</h2>
-          <button>shop now &#8594;</button>
+          <button>
+            <A href="/shop">shop now &#8594;</A>
+          </button>
           <h4>Many of your favorite patterns on 50% off.</h4>
         </div>
       </div>
