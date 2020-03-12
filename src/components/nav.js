@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { A } from "hookrouter";
+import { useSelector } from "react-redux";
 
 const Nav = () => {
+  const cart = useSelector(state => state.products.cart);
   const [toggle, setToggle] = useState(false);
   const [pageUp, setPageUp] = useState(false);
 
@@ -28,10 +30,10 @@ const Nav = () => {
         <div>
           <ul>
             <li>
-              <i
-                className="fa fa-shopping-cart cart-icon"
-                aria-hidden="true"
-              ></i>
+              <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+              {cart.length > 0 && (
+                <span className="cart-icon">{cart.length}</span>
+              )}
               <A href="/cart">Cart</A>
             </li>
             <li>

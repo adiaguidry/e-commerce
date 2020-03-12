@@ -1,31 +1,36 @@
 import React, { useState } from "react";
-import brick from "../img/brick.jpg";
 import Modal from "@material-ui/core/Modal";
-const Card = ({ title, price }) => {
+import { useDispatch } from "react-redux";
+import * as createAction from "../../actions/productActions";
+const Card = ({ product }) => {
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
+
+  const addToCart = product => {
+    dispatch(createAction.addToCart(product));
+    handleClose();
+  };
+
   return (
     <React.Fragment>
       <div className="card" onClick={handleOpen}>
         <div>
-          <img src="https://source.unsplash.com/random/200x200" alt="" />
+          <img width="200px" src={product.img} alt="" />
         </div>
         <div className="lead">
-          <p>{title}</p>
-          <p className="price">Price {price}</p>
+          <p>{product.title}</p>
+          <p className="price">Price {product.price}</p>
           <p>
-            <i className="fa fa-star" aria-hidden="true"></i>
-            <i className="fa fa-star" aria-hidden="true"></i>
-            <i className="fa fa-star" aria-hidden="true"></i>
-            <i className="fa fa-star-o" aria-hidden="true"></i>
-            <i className="fa fa-star-o" aria-hidden="true"></i>
+            {product.reviews.map(r => (
+              <i className={r} aria-hidden="true"></i>
+            ))}
             <span>(review)</span>
           </p>
         </div>
@@ -38,17 +43,25 @@ const Card = ({ title, price }) => {
           onClose={handleClose}
         >
           <div className="shop-modal">
+            <i className="fas fa-times fa-lrg" onClick={handleClose}></i>
             <div className="lead">
               <div>
-                <img src="https://source.unsplash.com/random/200x200" alt="" />
+                <img width="200px" src={product.img} alt="" />
               </div>
-              <h2 id="simple-modal-title">{title}</h2>
-              <p className="price">Price {price}</p>
-              <p id="simple-modal-description">
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-              </p>
-              <button type="button" onClick={handleClose}>
-                close Modal
+              <h2 id="simple-modal-title">{product.title}</h2>
+              <p className="price">Price {product.price}</p>
+              <p id="simple-modal-description">{product.description}</p>
+
+              <button className="cancel" type="button" onClick={handleClose}>
+                cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  addToCart(product);
+                }}
+              >
+                Add to cart
               </button>
             </div>
           </div>
