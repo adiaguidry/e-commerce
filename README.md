@@ -1,4 +1,4 @@
-![](src/images/farmersMarket.png)
+![](src/components/img/homePage.png)
 # ECOMMERCE SITE
 
 
