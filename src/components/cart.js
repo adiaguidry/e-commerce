@@ -7,7 +7,6 @@ const Cart = () => {
   return (
     <div>
       <PageBanner title={"cart"} />
-
       <CartTable />
     </div>
   );
