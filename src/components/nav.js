@@ -26,7 +26,7 @@ const Nav = () => {
   return (
     <div>
       <nav>
-        <div className="number">Call +456-678-9101</div>
+        <div className="number">Call +123-456-7890</div>
         <div>
           <ul>
             <li>
@@ -35,9 +35,6 @@ const Nav = () => {
                 <span className="cart-icon">{cart.length}</span>
               )}
               <A href="/cart">Cart</A>
-            </li>
-            <li>
-              <a href="#">Sign In</a>
             </li>
           </ul>
         </div>

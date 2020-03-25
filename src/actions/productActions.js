@@ -34,3 +34,17 @@ export const decreaseQ = product => {
     payload: product
   };
 };
+
+export const setShipping = shipping => {
+  return {
+    type: CONSTANTS.SET_SHIPPING,
+    payload: shipping
+  };
+};
+
+export const setCategory = categories => {
+  return {
+    type: CONSTANTS.SELECT_CATEGORY,
+    payload: categories
+  };
+};

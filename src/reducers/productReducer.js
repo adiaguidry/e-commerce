@@ -8,45 +8,13 @@ import p7 from "../components/img/product7.jpg";
 import p8 from "../components/img/product8.jpg";
 
 const initialState = {
-  cart: [
-    {
-      id: 1,
-      img: p2,
-      title: "Lemons into Lemonade",
-      price: "29.99",
-      quantity: 1,
-      total: 29.99,
-      description: "Lemons into Lemonade brightens up any room",
-      reviews: [
-        `fa fa-star`,
-        `fa fa-star`,
-        `fa fa-star`,
-        `fa fa-star-o`,
-        `fa fa-star-o`
-      ]
-    },
-    {
-      id: 0,
-      img: p1,
-      title: "Wise like an Owl",
-      price: "19.99",
-      quantity: 1,
-      total: 19.99,
-      description: "Your style your room",
-      reviews: [
-        `fa fa-star`,
-        `fa fa-star`,
-        `fa fa-star-o`,
-        `fa fa-star-o`,
-        `fa fa-star-o`
-      ]
-    }
-  ],
+  cart: [],
   cartTotal: {
     subtotal: 0,
     shipping: 0,
     total: 0
   },
+  selectedProducts: [],
   allProducts: [
     {
       id: 0,
@@ -56,6 +24,7 @@ const initialState = {
       quantity: 1,
       total: 19.99,
       description: "Your style your room",
+      category: ["nature"],
       reviews: [
         `fa fa-star`,
         `fa fa-star`,
@@ -72,6 +41,7 @@ const initialState = {
       quantity: 1,
       total: 25.55,
       description: "Lemons into Lemonade brightens up any room",
+      category: ["nature", "colorful"],
       reviews: [
         `fa fa-star`,
         `fa fa-star`,
@@ -88,6 +58,7 @@ const initialState = {
       quantity: 1,
       total: 19.99,
       description: "Bright pink flowers, dark blue background",
+      category: ["nature", "floral"],
       reviews: [
         `fa fa-star`,
         `fa fa-star`,
@@ -104,6 +75,7 @@ const initialState = {
       quantity: 1,
       total: 25.55,
       description: "Peaceful leafy green atmosphere",
+      category: ["nature"],
       reviews: [
         `fa fa-star`,
         `fa fa-star`,
@@ -120,6 +92,7 @@ const initialState = {
       quantity: 1,
       total: 9.99,
       description: "Pretty in pink flowers is almost too pretty",
+      category: ["nature", "floral"],
       reviews: [
         `fa fa-star`,
         `fa fa-star`,
@@ -136,6 +109,7 @@ const initialState = {
       quantity: 1,
       total: 19.99,
       description: "If Zebras have stripes why can't I?",
+      category: ["nature", "blackAndWhite", "abstract"],
       reviews: [
         `fa fa-star`,
         `fa fa-star`,
@@ -152,6 +126,7 @@ const initialState = {
       quantity: 1,
       total: 9.99,
       description: "Lots of dots go good on any wall",
+      category: ["blackAndWhite", "abstract"],
       reviews: [
         `fa fa-star`,
         `fa fa-star`,
@@ -168,6 +143,7 @@ const initialState = {
       quantity: 1,
       total: 39.99,
       description: "Not sure what you want this is a great option",
+      category: ["abstract", "colorful"],
       reviews: [
         `fa fa-star`,
         `fa fa-star`,
@@ -183,12 +159,13 @@ const productReducer = (state = initialState, action) => {
   let newState = { ...state };
   switch (action.type) {
     case "GET_PRODUCTS":
+      newState.selectedProducts = newState.allProducts;
       return newState;
     case "ADD_TO_CART":
       newState.cartTotal.subtotal = 0;
-      newState.cart.push(action.payload);
+      newState.cart = [action.payload, ...newState.cart];
       newState.cart.map(product => {
-        newState.cartTotal.subtotal = (
+        newState.cartTotal.total = newState.cartTotal.subtotal = (
           Number(product.total) + Number(newState.cartTotal.subtotal)
         ).toFixed(2);
       });
@@ -203,6 +180,10 @@ const productReducer = (state = initialState, action) => {
           Number(product.total) + Number(newState.cartTotal.subtotal)
         ).toFixed(2);
       });
+      newState.cartTotal.total = (
+        Number(newState.cartTotal.subtotal) +
+        Number(newState.cartTotal.shipping)
+      ).toFixed(2);
       return newState;
     case "INCREASE_Q":
       newState.cartTotal.subtotal = 0;
@@ -223,6 +204,10 @@ const productReducer = (state = initialState, action) => {
         ).toFixed(2);
       });
 
+      newState.cartTotal.total = (
+        Number(newState.cartTotal.subtotal) +
+        Number(newState.cartTotal.shipping)
+      ).toFixed(2);
       console.log(newState.cartTotal.subtotal);
 
       return newState;
@@ -245,9 +230,31 @@ const productReducer = (state = initialState, action) => {
           Number(product.total) + Number(newState.cartTotal.subtotal)
         ).toFixed(2);
       });
-
+      newState.cartTotal.total = (
+        Number(newState.cartTotal.subtotal) +
+        Number(newState.cartTotal.shipping)
+      ).toFixed(2);
+      return newState;
+    case "SET_SHIPPING":
+      newState.cartTotal.shipping = action.payload;
+      newState.cartTotal.total = (
+        Number(newState.cartTotal.subtotal) + Number(action.payload)
+      ).toFixed(2);
+      return newState;
     //shipping price
+    case "SELECT_CATEGORY":
+      const categories = [];
+      newState.allProducts.map(product => {
+        if (action.payload.some(v => product.category.includes(v))) {
+          categories.push(product);
+          newState.selectedProducts = [...categories];
+        }
+        if (action.payload.length === 0) {
+          newState.selectedProducts = [...newState.allProducts];
+        }
+      });
 
+      return newState;
     default:
       return state;
   }

@@ -3,7 +3,7 @@ import Card from "./card";
 import { useSelector } from "react-redux";
 
 const Cards = () => {
-  const products = useSelector(state => state.products.allProducts);
+  const products = useSelector(state => state.products.selectedProducts);
 
   useEffect(() => {
     console.log(products);

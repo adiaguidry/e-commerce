@@ -1,21 +1,26 @@
 import React, { useState } from "react";
 import Modal from "@material-ui/core/Modal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as createAction from "../../actions/productActions";
+import { A } from "hookrouter";
 const Card = ({ product }) => {
   const dispatch = useDispatch();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [shopping, setShopping] = useState(true);
 
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+    setShopping(true);
   };
 
   const addToCart = product => {
     dispatch(createAction.addToCart(product));
-    handleClose();
+    setShopping(false);
+    console.log(shopping);
+    // handleClose();
   };
 
   return (
@@ -52,17 +57,40 @@ const Card = ({ product }) => {
               <p className="price">Price {product.price}</p>
               <p id="simple-modal-description">{product.description}</p>
 
-              <button className="cancel" type="button" onClick={handleClose}>
-                cancel
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  addToCart(product);
-                }}
-              >
-                Add to cart
-              </button>
+              {shopping ? (
+                <div>
+                  <button
+                    className="cancel"
+                    type="button"
+                    onClick={handleClose}
+                  >
+                    cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      addToCart(product);
+                    }}
+                  >
+                    Add to cart
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <button
+                    className="cancel"
+                    type="button"
+                    onClick={handleClose}
+                  >
+                    Continue Shopping
+                  </button>
+                  <button type="button">
+                    <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+
+                    <A href="/cart">Go to Cart</A>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </Modal>

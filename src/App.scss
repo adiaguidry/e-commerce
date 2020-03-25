@@ -237,12 +237,13 @@ nav {
     justify-content: center;
     .right {
       position: relative;
-      left: 1100px;
+      left: 87vw;
       top: 200px;
     }
     .left {
       position: relative;
       top: 200px;
+      left: -2vw;
     }
     .section-cards-item {
       overflow: hidden;
@@ -468,7 +469,7 @@ nav {
 .shop-modal {
   background-color: #fff;
   width: 400px;
-  height: 500px;
+  height: auto;
   padding: 3rem;
   transform: translate(-50%, -50%);
   position: absolute;
@@ -501,6 +502,10 @@ nav {
     font-size: 1.2rem;
     height: 3rem;
     border-radius: 5px;
+    a {
+      text-decoration: none;
+      color: #444;
+    }
   }
   button:hover {
     background-color: $yellow;
@@ -867,6 +872,9 @@ nav {
       margin: 0;
     }
   }
+  .cart .cart-layout td .qty-input {
+    width: 4rem;
+  }
   .cart {
     font-size: 1.5rem;
     align-items: center;
@@ -885,6 +893,7 @@ nav {
       justify-content: center;
       align-items: center;
       width: 100%;
+      border-bottom: 1px solid;
 
       td {
         padding: 0.5rem;

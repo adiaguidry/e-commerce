@@ -30,66 +30,74 @@ const CartTable = () => {
 
   return (
     <div className="cart">
-      <div className="cart-layout">
-        <table cellspacing="0">
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Total</th>
-              <th></th>
-            </tr>
-          </thead>
+      {cart.length !== 0 ? (
+        <React.Fragment>
+          <div className="cart-layout">
+            <table cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                  <th></th>
+                </tr>
+              </thead>
 
-          <tbody>
-            {cart.map(p => (
-              <tr key={p.id}>
-                <td>
-                  <div>
-                    <img width="100px" src={p.img} alt="" />
-                    <span>{p.title}</span>
-                  </div>
-                </td>
-                <td>{p.price}</td>
-                <td>
-                  <div className="qty-input">
-                    <i
+              <tbody>
+                {cart.map(p => (
+                  <tr key={p.id}>
+                    <td>
+                      <div>
+                        <img width="100px" src={p.img} alt="" />
+                        <span>{p.title}</span>
+                      </div>
+                    </td>
+                    <td>{p.price}</td>
+                    <td>
+                      <div className="qty-input">
+                        <i
+                          style={{ cursor: "pointer" }}
+                          className="fas fa-minus"
+                          onClick={() => {
+                            decreaseQ(p);
+                            console.log("decrease");
+                          }}
+                        ></i>
+                        <input type="text" value={p.quantity} />
+                        <i
+                          style={{ cursor: "pointer" }}
+                          className="fas fa-plus"
+                          onClick={() => {
+                            console.log("increase");
+                            increaseQ(p);
+                          }}
+                        ></i>
+                      </div>
+                    </td>
+                    <td>{p.total}</td>
+                    <td
                       style={{ cursor: "pointer" }}
-                      className="fas fa-minus"
                       onClick={() => {
-                        decreaseQ(p);
-                        console.log("decrease");
+                        setRemove(p.id);
                       }}
-                    ></i>
-                    <input type="text" value={p.quantity} />
-                    <i
-                      style={{ cursor: "pointer" }}
-                      className="fas fa-plus"
-                      onClick={() => {
-                        console.log("increase");
-                        increaseQ(p);
-                      }}
-                    ></i>
-                  </div>
-                </td>
-                <td>{p.total}</td>
-                <td
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    setRemove(p.id);
-                  }}
-                >
-                  &#10005;
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div className="cart-total">
-        <CartTotal cartTotal={cartTotal} />
-      </div>
+                    >
+                      <i className="fas fa-trash" />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="cart-total">
+            <CartTotal cartTotal={cartTotal} />
+          </div>
+        </React.Fragment>
+      ) : (
+        <div style={{ padding: "2rem" }}>
+          <h1>Add items to cart . . .</h1>
+        </div>
+      )}
     </div>
   );
 };
